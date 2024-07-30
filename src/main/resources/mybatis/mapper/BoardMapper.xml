@@ -18,9 +18,21 @@
         SELECT * FROM board
         INNER JOIN user
         ON board.writer_id = user.id
-        ORDER BY board.id DESC
+        ORDER BY board.id ASC
         LIMIT ${startRow}, ${size}
     </select>
 
+    <!--  insert 된 후에 insert id 값을 얻을 수 있도록 <useGeneratedKeys="true" keyProperty="id"> 을 넣어준다.  -->
+    <insert id="insert" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO board(title, content, writer_id, entry_date, modify_date)
+        VALUES (#{title}, #{content}, #{writerId}, NOW(), NOW())
+    </insert>
 
+    <update id="update" parameterType="BoardDTO">
+        UPDATE board
+        SET title = #{title},
+        content= #{content},
+        modify_date = NOW()
+        WHERE id = #{id}
+    </update>
 </mapper>

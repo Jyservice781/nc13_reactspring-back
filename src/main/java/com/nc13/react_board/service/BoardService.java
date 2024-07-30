@@ -43,4 +43,14 @@ public class BoardService {
 
         return maxPage;
     }
+    // --------------   글쓰기   -----------------
+
+    public void insert(BoardDTO boardDTO){
+        SESSION.insert(NAMESPACE + ".insert", boardDTO);
+    }
+
+    //---------------   수정하기  ------------------
+    public void update(BoardDTO boardDTO){
+        SESSION.update(NAMESPACE + ".update", boardDTO);
+    }
 }
