@@ -9,4 +9,18 @@
         ON board.writer_id = user.id
         WHERE board.id = #{id}
     </select>
+
+    <select id="selectMaxPage" resultType="int">
+        SELECT COUNT(*) FROM board
+    </select>
+
+    <select id="selectList" parameterType="hashmap" resultType="BoardDTO">
+        SELECT * FROM board
+        INNER JOIN user
+        ON board.writer_id = user.id
+        ORDER BY board.id DESC
+        LIMIT ${startRow}, ${size}
+    </select>
+
+
 </mapper>
