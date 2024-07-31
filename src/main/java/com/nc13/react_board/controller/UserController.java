@@ -2,7 +2,6 @@ package com.nc13.react_board.controller;
 
 
 import com.nc13.react_board.model.UserDTO;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;

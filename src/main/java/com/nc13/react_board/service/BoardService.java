@@ -53,4 +53,9 @@ public class BoardService {
     public void update(BoardDTO boardDTO){
         SESSION.update(NAMESPACE + ".update", boardDTO);
     }
+
+    // --------------  삭제하기  -------------------
+   /* public void delete(int id){
+        SESSION.delete(NAMESPACE + ".delete", id);
+    }*/
 }
