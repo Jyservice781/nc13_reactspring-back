@@ -55,7 +55,7 @@ public class BoardService {
     }
 
     // --------------  삭제하기  -------------------
-   /* public void delete(int id){
+    public void delete(int id){
         SESSION.delete(NAMESPACE + ".delete", id);
-    }*/
+    }
 }

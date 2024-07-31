@@ -36,8 +36,8 @@
         WHERE id = #{id}
     </update>
 
-    <!--<delete id="delete" parameterType="BoardDTO">
-        DELETE board
-        FROM board.id = #{id}
-    </delete>-->
+    <delete id="delete" parameterType="int">
+        DELETE FROM board
+        WHERE id = #{id}
+    </delete>
 </mapper>

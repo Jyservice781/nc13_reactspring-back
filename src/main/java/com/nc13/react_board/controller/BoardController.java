@@ -83,10 +83,9 @@ public class BoardController {
         return resultMap;
     }
 
-    /*
-    @PostMapping("delete/{id}")
-    public void delete(@RequestBody BoardDTO boardDTO, @PathVariable int id){
+    @GetMapping("delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id){
         BOARD_SERVICE.delete(id);
+        return ResponseEntity.ok().build();
     }
-    */
 }
