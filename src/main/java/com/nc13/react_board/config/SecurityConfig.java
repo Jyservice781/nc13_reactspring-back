@@ -1,5 +1,6 @@
 package com.nc13.react_board.config;
 
+import com.nc13.react_board.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,7 +22,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, UserDetailsServiceImpl userDetailsService) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
@@ -36,20 +37,26 @@ public class SecurityConfig {
                                 // 백엔드로 오도록 해주는 설정이다.
                                 // form 데이터로 오도록 함
                                 .loginProcessingUrl("/user/auth")
-                                .defaultSuccessUrl("/user/authSuccess"))
+                                .successForwardUrl("/user/authSuccess")
+                                .failureForwardUrl("/user/authFail"))
                 .logout((logout) ->
                         logout
                                 .logoutUrl("/user/logOut")
                                 .logoutSuccessUrl("/user/logOutSuccess")
-                                .deleteCookies("JSESSIONID")
-                );
+                                .clearAuthentication(true)
+
+                                .deleteCookies("JSESSIONID"))
+                .userDetailsService(userDetailsService);
 
         httpSecurity.addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class);
+        // 기본적으로 UsernamePasswordAuthenticationFilter 를 사용하게 되면
+        // POST 를 이용한 요청만을 받을 수 있고, username, password 라는 obtain 이라는 함수를 이용해서 값을 가져옴.
+
 
         return httpSecurity.build();
     }
 
-    //CORS 속성 걸기 - controller 가 아니기 때문에 @bean 으로 만든다.
+    //CORS 속성 걸기 - controller 가 아니기 때문에 @Bean 으로 만든다.
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration configuration = new CorsConfiguration();
